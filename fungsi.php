@@ -149,7 +149,7 @@ if(mysqli_fetch_assoc( $result ) ){
 
 if( $password !== $password2){
     echo "<script>
-    alert('GAGAL')
+    alert('Konfirmasi password salah')
     </script>";
     return false;
 }

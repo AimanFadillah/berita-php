@@ -2,12 +2,16 @@
 
    require 'fungsi.php';
 
+
+
    if(isset ($_POST["register"]) ){
 
     if( registrasi($_POST) ){
         echo "<script>
-                alert('USER BARU'); 
+                alert('Selamat Datang New user'); 
+                document.location.href='login.php'; 
                 </script>";
+        
     }else {
         echo mysqli_error($conn);
     }

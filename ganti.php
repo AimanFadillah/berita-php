@@ -2,6 +2,15 @@
 
    require 'fungsi.php';
 
+   session_start();
+
+
+    // sesion login
+    if( !isset( $_SESSION["login"] ) ){
+        header("Location:login.php");
+        exit;
+    }
+
    $id = $_GET["id"];
 
    $komentar = query("SELECT * FROM komentar WHERE id = $id")[0];
