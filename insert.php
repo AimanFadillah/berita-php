@@ -2,6 +2,17 @@
 
    require 'fungsi.php';
 
+   session_start();
+
+
+   // sesion login
+   if( !isset( $_SESSION["login"] ) ){
+       header("Location:login.php");
+       exit;
+   }
+
+
+
    if(isset( $_POST["kirim"] ) ){
 
     

@@ -1,6 +1,13 @@
 <?php 
     require 'fungsi.php';
-  
+    session_start();
+
+    if( isset( $_SESSION["login"] ) ){
+        header("location:index.php");
+        exit;
+    }
+
+
     if(isset ($_POST["login"] ) ) {
 
         $nama_user = $_POST["nama"];
@@ -15,7 +22,11 @@
 
             $row = mysqli_fetch_assoc($result);
 
-            // var_dump (password_verify($password , $row["password"] ) );
+           
+            // membuat session
+            $_SESSION["login"] = true;
+
+
             if (password_verify($password_user,$row["password"])) {
                 header("Location: index.php");exit();
             }
@@ -92,6 +103,11 @@ button{
     
 }
 
+.Registrasi{
+
+    text-align: center;
+}
+
 
     </style>
 
@@ -110,11 +126,15 @@ button{
 
             <label for="nama">Password</label><br>
             <input type="password" name="password" id="password" class="panjang" required autocomplete="off">
+
             <?php if(isset($error) ) : ?>
             <p class="perigatan">Password / Username salah</p>
             <?php endif; ?>
+
                 <br><br>
-            <div class="tombol"><button type="submit" name="login">Login</button></div>
+            
+            <div class="tombol"><button type="submit" name="login">Login</button></div><br>
+            <h6 class="Registrasi">Blm Punya Akun Bisa <a href="registrasi.php">Register</a> Dulu</h6>
         </form> 
     </div>
 </body>

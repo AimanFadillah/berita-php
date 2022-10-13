@@ -1,5 +1,14 @@
 <?php 
     require 'fungsi.php';
+    session_start();
+
+
+    // sesion login
+    if( !isset( $_SESSION["login"] ) ){
+        header("Location:login.php");
+        exit;
+    }
+
 
     $komentar = query("SELECT * FROM komentar");
 
@@ -54,22 +63,30 @@ body{
     background-position: 0px -140px;
 }
 
-navbar ul{
+navbar{
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 navbar ul li{
+    margin-right: 5px;
     display: inline-block;
     padding: 10px;
     background-color: #ddd;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
-navbar ul li.pencarian{
+.pencarian{
     background: none;
     box-shadow: none;
 }
+
+navbar ul li a{
+    text-decoration: none;
+    color: black;
+}
+
 
 
 input.cari-in{
@@ -82,15 +99,6 @@ input.cari-in[type="text"]:focus{
     border: none;
     outline: none;
     border-bottom: 1px solid black;
-}
-
-navbar ul li a{
-    text-decoration: none;
-    color: black;
-}
-
-navbar ul li.tambah{
-    margin-right:50px;
 }
 
 .komentar{
@@ -144,21 +152,26 @@ navbar ul li.tambah{
 <body>
     <div class="contener">
         <h1>Komentar Sebuah Foto</h1>
+       
     <div class="gambar-1"></div>
     <!-- navbar -->
     <navbar>
-    <ul>
-        <li class="tambah">
-            <a href="insert.php" class="menambahkan">Tambah Komentar</a>
-         </li>
-        <li class="pencarian"><form action="" method="POST">
+
+         <form action="" method="POST"  class="pencarian">
             <input type="text" name="keyword" id="cari" class="cari-in"
             placeholder=" Cari Komentar..." autofocus autocomplete="off">
             <button type="submit" name="cari" id="cari">Searcing</button>
         </form>
-    </li>
-    </ul>
+
+        <ul>
+
+
+            <li class="tambah"><a href="insert.php" class="menambahkan">Tambah Komentar</a></li>
+            <li><a href="logout.php" class="menambahkan">logout</a></li>
+
+        </ul>
     </navbar>
+
     <!-- isi komentar -->
     <?php foreach ( $komentar as $komen ) : ?>
     <div class="komentar">
