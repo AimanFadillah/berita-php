@@ -110,6 +110,8 @@ input.cari-in[type="text"]:focus{
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
+
+
 .item-none{
     display: flex;
 }
@@ -158,7 +160,7 @@ input.cari-in[type="text"]:focus{
     <navbar>
 
          <form action="" method="POST"  class="pencarian">
-            <input type="text" name="keyword" id="cari" class="cari-in"
+            <input type="text" name="keyword" id="keyword" class="cari-in"
             placeholder=" Cari Komentar..." autofocus autocomplete="off">
             <button type="submit" name="cari" id="cari">Searcing</button>
         </form>
@@ -167,15 +169,16 @@ input.cari-in[type="text"]:focus{
 
 
             <li class="tambah"><a href="insert.php" class="menambahkan">Tambah Komentar</a></li>
-            <li><a href="logout.php" class="menambahkan">logout</a></li>
+            <li><a href="logout.php" class="menambahkan">Logout</a></li>
 
         </ul>
     </navbar>
 
     <!-- isi komentar -->
+<div class="jarak" id="komentar">
     <?php foreach ( $komentar as $komen ) : ?>
+    
     <div class="komentar">
-
         <div class="nama-komentar">
             <div class="item-none">
                 <img src="img/<?= $komen["gambar"]; ?> "  alt="gambar" class="foto-komentar">
@@ -189,12 +192,16 @@ input.cari-in[type="text"]:focus{
             
         </div>
         <div class="dalam-komentar"><p><?= $komen["komentar"]; ?></p></div><br><br>
-
-
     </div>
+
+  
     <?php endforeach ; ?>
-    
-    </div>    
+</div>
+
+</div>    
+
+
+    <script src="JS/script.js"></script>
 </body>
 
 </html>
