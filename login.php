@@ -2,6 +2,23 @@
     require 'fungsi.php';
     session_start();
 
+    if( isset($_COOKIE['id']) ){
+       $id = $_COOKIE["id"];
+       $key = $_COOKIE["key"];
+
+        // ambil user name berdasarkan id
+        $result = mysqli_query($conn,"SELECT user FROM user WHERE id = $id");
+
+        $row = mysqli_fetch_assoc($result);
+
+        // cek cookie username
+        if($key === hash('sha256',$row["nama"]) ){
+            $_SESSION["login"] = true ;
+        }
+
+    }
+
+   
     if( isset( $_SESSION["login"] ) ){
         header("location:index.php");
         exit;
@@ -24,12 +41,22 @@
 
            
             // membuat session
-            $_SESSION["login"] = true;
+          
 
 
             if (password_verify($password_user,$row["password"])) {
-                header("Location: index.php");exit();
+
+                $_SESSION["login"] = true;
+                header("Location: index.php");
+                exit();
+
+                if( isset($_POST["ingat_saya"]) ){
+                    setcookie('id',$row["id"],time() + 6000);
+                    setcookie('key',hash('sha256',$row["username"]),time() + 6000 );
+                }
+
             }
+
 
 
         }
@@ -37,6 +64,8 @@
         $error = true;
 
     }
+
+   
 
     
 ?>
@@ -62,11 +91,11 @@ body{
 
 .contener{
     width: 25%;
-    height: 300px;
+    height: 340px;
     border-radius: 5px;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    margin: 150px auto;
+    margin: 90px auto;
     padding: 30px;
     padding-top: 40px;
 }
@@ -93,6 +122,11 @@ form{
     width: 80px;
     margin: 10px auto;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.ingat_aku{
+    margin-top: 30px;
+
 }
 
 button{
@@ -130,6 +164,11 @@ button{
             <?php if(isset($error) ) : ?>
             <p class="perigatan">Password / Username salah</p>
             <?php endif; ?>
+
+
+            <input type="checkbox" name="ingat_aku" id="ingat_aku" class="ingat_aku">
+            <label for="ingat_aku">Ingat Saya</label>
+           
 
                 <br><br>
             
